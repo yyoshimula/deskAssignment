@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究室席替えアプリ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎲 研究室席替えアプリ</h1>
+            <p>メンバーの名前を入力して、席を決めましょう！</p>
+        </header>
+
+        <div class="input-section" id="inputSection">
+            <div class="name-input-area">
+                <textarea
+                    id="nameInput"
+                    placeholder="メンバーの名前を入力してください（1行に1名）"
+                    rows="10"
+                >吉村
+中島
+三好
+森岡
+服部
+延原
+野々宮
+津留崎
+加賀
+河野
+松浦
+こめら
+奥村
+中渡瀬
+Matis</textarea>
+            </div>
+            <div class="room-selection">
+                <h3>使用する座席を選択してください</h3>
+                <div class="room-options">
+                    <label class="room-option">
+                        <input type="checkbox" id="use801" checked>
+                        <span>801号室を使用</span>
+                    </label>
+                    <label class="room-option">
+                        <input type="checkbox" id="use804" checked>
+                        <span>804号室を使用</span>
+                    </label>
+                </div>
+            </div>
+            <button id="startButton" class="start-btn">
+                <span>🎯 席替え開始！</span>
+            </button>
+        </div>
+
+        <div class="assignment-section" id="assignmentSection" style="display: none;">
+            <div class="assignment-header">
+                <h2>席の割り当て中...</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            
+            <div class="current-assignment" id="currentAssignment">
+                <div class="member-name" id="memberName"></div>
+                <div class="seat-number" id="seatNumber"></div>
+                <div class="assignment-arrow">→</div>
+            </div>
+
+            <div class="rooms-container" id="roomsContainer">
+                <!-- Room 801 -->
+                <div class="room" id="room801">
+                    <h3 class="room-title">801号室</h3>
+                    <div class="room-layout">
+                        <div class="desk-row">
+                            <div class="desk-column">
+                                <div class="desk wide-desk" data-seat="801-S1"><span class="seat-label">S1</span><span class="seat-name">s1</span></div>
+                                <div class="desk" data-seat="801-A1"><span class="seat-label">A1</span><span class="seat-name">a1</span></div>
+                                <div class="desk" data-seat="801-A2"><span class="seat-label">A2</span><span class="seat-name">a2</span></div>
+                            </div>
+                            <div class="desk-column">
+                                <div class="desk empty-space"></div>
+                                <div class="desk" data-seat="801-B1"><span class="seat-label">B1</span><span class="seat-name">b1</span></div>
+                                <div class="desk" data-seat="801-B2"><span class="seat-label">B2</span><span class="seat-name">b2</span></div>
+                            </div>
+                            <div class="desk-column">
+                                <div class="desk" data-seat="801-C1"><span class="seat-label">C1</span><span class="seat-name">c1</span></div>
+                                <div class="desk" data-seat="801-C2"><span class="seat-label">C2</span><span class="seat-name">c2</span></div>
+                                <div class="desk" data-seat="801-C3"><span class="seat-label">C3</span><span class="seat-name">c3</span></div>
+                                <div class="desk" data-seat="801-C4"><span class="seat-label">C4</span><span class="seat-name">c4</span></div>
+                            </div>
+                            <div class="desk-column">
+                                <div class="desk" data-seat="801-S2"><span class="seat-label">S2</span><span class="seat-name">s2</span></div>
+                                <div class="desk" data-seat="801-D1"><span class="seat-label">D1</span><span class="seat-name">d1</span></div>
+                                <div class="desk" data-seat="801-D2"><span class="seat-label">D2</span><span class="seat-name">d2</span></div>
+                                <div class="desk" data-seat="801-D3"><span class="seat-label">D3</span><span class="seat-name">d3</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room 804 -->
+                <div class="room" id="room804">
+                    <h3 class="room-title">804号室</h3>
+                    <div class="room-layout">
+                        <div class="desk-row">
+                            <div class="desk-column">
+                                <div class="desk wide-desk" data-seat="804-S1"><span class="seat-label">S1</span><span class="seat-name">s1</span></div>
+                                <div class="desk" data-seat="804-A1"><span class="seat-label">A1</span><span class="seat-name">a1</span></div>
+                                <div class="desk" data-seat="804-A2"><span class="seat-label">A2</span><span class="seat-name">a2</span></div>
+                            </div>
+                            <div class="desk-column">
+                                <div class="desk empty-space"></div>
+                                <div class="desk" data-seat="804-B1"><span class="seat-label">B1</span><span class="seat-name">b1</span></div>
+                                <div class="desk" data-seat="804-B2"><span class="seat-label">B2</span><span class="seat-name">b2</span></div>
+                            </div>
+                            <div class="desk-column">
+                                <div class="desk empty-space"></div>
+                                <div class="desk" data-seat="804-C1"><span class="seat-label">C1</span><span class="seat-name">c1</span></div>
+                                <div class="desk" data-seat="804-C2"><span class="seat-label">C2</span><span class="seat-name">c2</span></div>
+                            </div>
+                            <div class="desk-column">
+                                <div class="desk wide-desk-right" data-seat="804-S2"><span class="seat-label">S2</span><span class="seat-name">s2</span></div>
+                                <div class="desk" data-seat="804-D1"><span class="seat-label">D1</span><span class="seat-name">d1</span></div>
+                                <div class="desk" data-seat="804-D2"><span class="seat-label">D2</span><span class="seat-name">d2</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="restartButton" class="restart-btn" style="display: none;">
+                <span>🔄 もう一度席替え</span>
+            </button>
+        </div>
+
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <h2>🎉 席割り当て完了！</h2>
+            <p>上の机の配置で実際の座席位置をご確認ください</p>
+            <div class="final-results" id="finalResults"></div>
+            <button id="newAssignmentButton" class="restart-btn">
+                <span>🆕 新しい席替え</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
