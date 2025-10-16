@@ -35,7 +35,7 @@ class SeatAssignmentApp {
                 {id: '804-B1', room: '804', label: 'B1', currentOccupant: '', available: true},
                 {id: '804-B2', room: '804', label: 'B2', currentOccupant: 'free(no monitor)', available: false},
                 {id: '804-C1', room: '804', label: 'C1', currentOccupant: '', available: true},
-                {id: '804-C2', room: '804', label: 'C2', currentOccupant: '', available: true},
+                {id: '804-C2', room: '804', label: 'C2', currentOccupant: '', available: false},
                 {id: '804-D1', room: '804', label: 'D1', currentOccupant: '', available: true},
                 {id: '804-D2', room: '804', label: 'D2', currentOccupant: '', available: true}
             ]
