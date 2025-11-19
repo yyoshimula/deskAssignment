@@ -509,11 +509,11 @@ class SeatAssignmentApp {
 
         this.assignments = [];
 
-        // 中渡瀬さんの特別処理：必ず804号室に割り当て
-        const nakawataseIndex = shuffledMembers.findIndex(member => member.includes('中渡瀬'));
-        if (nakawataseIndex !== -1) {
-            const nakawataseMember = shuffledMembers[nakawataseIndex];
-            shuffledMembers.splice(nakawataseIndex, 1);
+        // 特別処理1: 特定メンバーを804号室に割り当て
+        const specialMember1Index = shuffledMembers.findIndex(member => member.includes('\u4e2d\u6e21\u702c'));
+        if (specialMember1Index !== -1) {
+            const specialMember1 = shuffledMembers[specialMember1Index];
+            shuffledMembers.splice(specialMember1Index, 1);
 
             // 804号室の空席を探す
             const room804Seats = availableSeatsForAssignment.filter(seat => seat.room === '804');
@@ -521,12 +521,50 @@ class SeatAssignmentApp {
                 // 804号室のランダムな席に割り当て
                 const randomSeat = room804Seats[Math.floor(Math.random() * room804Seats.length)];
                 this.assignments.push({
-                    member: nakawataseMember,
+                    member: specialMember1,
                     seat: randomSeat
                 });
                 // 使用した席を削除
                 const seatIndex = availableSeatsForAssignment.findIndex(s => s.id === randomSeat.id);
                 availableSeatsForAssignment.splice(seatIndex, 1);
+            }
+        }
+
+        const temp1Rooms = availableSeatsForAssignment.filter(s => s.room === '801');
+        const temp2Rooms = availableSeatsForAssignment.filter(s => s.room === '804');
+
+        if (temp1Rooms.length > 0 && temp2Rooms.length > 0) {
+            const idx1 = shuffledMembers.findIndex(m => m.includes('\u3053\u3081\u3089'));
+            const idx2 = shuffledMembers.findIndex(m => m.includes('\u5965\u6751'));
+
+            if (idx1 !== -1 && idx2 !== -1) {
+                const temp1Member = shuffledMembers[idx1];
+                const temp2Member = shuffledMembers[idx2];
+
+                shuffledMembers.splice(Math.max(idx1, idx2), 1);
+                shuffledMembers.splice(Math.min(idx1, idx2), 1);
+
+                const roomOrder = Math.random() < 0.5 ? ['801', '804'] : ['804', '801'];
+
+                const targetRooms = [
+                    availableSeatsForAssignment.filter(s => s.room === roomOrder[0]),
+                    availableSeatsForAssignment.filter(s => s.room === roomOrder[1])
+                ];
+
+                if (targetRooms[0].length > 0 && targetRooms[1].length > 0) {
+                    const seat1 = targetRooms[0][Math.floor(Math.random() * targetRooms[0].length)];
+                    this.assignments.push({ member: temp1Member, seat: seat1 });
+                    const sIdx1 = availableSeatsForAssignment.findIndex(s => s.id === seat1.id);
+                    availableSeatsForAssignment.splice(sIdx1, 1);
+
+                    const updatedTargetRoom = availableSeatsForAssignment.filter(s => s.room === roomOrder[1]);
+                    if (updatedTargetRoom.length > 0) {
+                        const seat2 = updatedTargetRoom[Math.floor(Math.random() * updatedTargetRoom.length)];
+                        this.assignments.push({ member: temp2Member, seat: seat2 });
+                        const sIdx2 = availableSeatsForAssignment.findIndex(s => s.id === seat2.id);
+                        availableSeatsForAssignment.splice(sIdx2, 1);
+                    }
+                }
             }
         }
 
